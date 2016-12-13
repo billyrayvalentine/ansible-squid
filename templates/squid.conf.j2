@@ -1,0 +1,65 @@
+#jinja2: lstrip_blocks: "True (or False)", trim_blocks: "True (or False)"
+# {{ ansible_managed }}
+{% if squid_acl_localnet is defined %}
+  {% for item in squid_acl_localnet %}
+acl localnet src {{ item }}
+  {% endfor %}
+{% endif %}
+
+{% if squid_default_acl is defined %}
+# Default acl
+  {% for item in squid_default_acl %}
+acl {{ item }}
+  {% endfor %}
+{% endif %}
+
+{% if squid_custom_acl is defined %}
+# Custom acl
+  {% for item in squid_custom_acl %}
+acl {{ item }}
+  {% endfor %}
+{% endif %}
+
+{% if squid_default_http_access is defined %}
+# Default http_access rules
+  {% for item in squid_default_http_access %}
+http_access {{ item }}
+  {% endfor %}
+{% endif %}
+
+{% if squid_custom_http_access is defined %}
+# Custom http_access rules
+  {% for item in squid_custom_http_access %}
+http_access {{ item }}
+  {% endfor %}
+{% endif %}
+
+{% if squid_http_ports is defined %}
+  {% for item in squid_http_ports %}
+http_port {{ item }}
+  {% endfor %}
+{% endif %}
+
+{% if squid_https_ports is defined %}
+  {% for item in squid_https_ports %}
+https_port {{ item }}
+  {% endfor %}
+{% endif %}
+
+{% if squid_access_log is defined %}
+access_log {{ squid_access_log }}
+{% endif %}
+
+# Uncomment and adjust the following to add a disk cache directory.
+#cache_dir aufs /var/cache/squid 100 16 256
+
+# Leave coredumps in the first cache dir
+coredump_dir /var/cache/squid
+
+#
+# Add any of your own refresh_pattern entries above these.
+#
+refresh_pattern ^ftp:		1440	20%	10080
+refresh_pattern ^gopher:	1440	0%	1440
+refresh_pattern -i (/cgi-bin/|\?) 0	0%	0
+refresh_pattern .		0	20%	4320
