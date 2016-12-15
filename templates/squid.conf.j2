@@ -34,7 +34,7 @@ http_access {{ item }}
   {% endfor %}
 {% endif %}
 
-{% if squid_http_ports is defined %}
+{% if squid_http_ports %}
   {% for item in squid_http_ports %}
 http_port {{ item }}
   {% endfor %}
