@@ -9,15 +9,16 @@ squid_default_acl:
   - Safe_ports port 443         # https
   - Safe_ports port 70          # gopher
   - Safe_ports port 210         # wais
-  - Safe_ports port 1025-65535  # unregistered ports
   - Safe_ports port 280         # http-mgmt
   - Safe_ports port 488         # gss-http
   - Safe_ports port 591         # filemaker
   - Safe_ports port 777         # multiling http
+  - Safe_ports port 1025-65535  # unregistered ports
   - CONNECT method CONNECT
 
 squid_custom_acl: []
-squid_default_http_access:
+
+squid_http_access:
   - deny !Safe_ports
   - deny CONNECT !SSL_ports
   - allow localhost manager
@@ -26,8 +27,14 @@ squid_default_http_access:
   - allow localhost
   - deny all
 
-squid_custom_http_access: []
 squid_http_ports:
   - 3128
-squid_https_ports:
+
+squid_coredump_dir: /var/cache/squid
+
+squid_default_refresh_patterns:
+  - '^ftp:       1440    20% 10080'
+  - '^gopher:    1440    0%  1440'
+  - '-i (/cgi-bin/|\?) 0 0%  0'
+  - '.           0       20% 4320'
 
