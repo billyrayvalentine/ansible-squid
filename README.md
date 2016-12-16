@@ -1,38 +1,40 @@
-Role Name
-=========
+EADME.md
+# Ansible Role: squid
+A simple yet useful role to configure squid server.  A working proxy can be set up with minimal effort.  This roles tries to balance the sensible [defaults](http://wiki.squid-cache.org/SquidFaq/ConfiguringSquid#Squid-3.5_default_config) distributed with squid but with the option to extended them or disregard them. This role also allows for multiple http and https ports to be configured along with all the usual things like acls and http_access rules.
 
-A brief description of the role goes here.
+Tested on openSUSE and on CentOS.  Should work on most platforms.  Requires Ansible version >=2.0
 
-Requirements
-------------
+# Role Variables
+The current defaults can be found in [defaults/main.yml](defaults/main.yml) - These should be mostly self explanatory.
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+```squid_acl_localnet``` - defines the src network value for the default acl "allow localnet" - does not have to be set but the reference to the acl in http_access must be removed.
 
-Role Variables
---------------
+```squid_default_acl``` - populated with the ditributed squid default acl
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+```squid_custom_acl``` - defines an additional acl
 
-Dependencies
-------------
+```squid_http_access``` - populated with the default http_access rules.  Any additional rules must refined the entire list
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+```squid_http_ports``` - a list of http_port parameters to use.  Defaults to 3128.  Redfine as an empty list to not listen with http. Use this to run on multiple ports
 
-Example Playbook
-----------------
+```squid_https_ports``` - a list of https_port parameters to use e.g. "3129 cert=/etc/squid/squid.crt"
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+```squid_access_log``` - set a value for access_log
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+``` squid_cache_dir``` - set a value for squid_cache_dir
 
-License
--------
+```squid_coredump_dir``` - Sets the associated value, defaults to /var/cache/squid - likely to be useful different platforms use a different value
 
-BSD
+```squid_custom_refresh_patterns``` - a list of additional refresh pattern parameters
 
-Author Information
-------------------
+```squid_default_refresh_patterns``` - a list populated with the default refresh pattern parameters
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+# Examples
+
+## Bare minimum
+Setting just ```squid_acl_localnet``` will provide a working squid proxy
+```yaml
+---
+icecast_admin_password: hackme
+icecast_source_password: hackme
+```
