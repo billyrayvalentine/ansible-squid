@@ -40,7 +40,7 @@ squid_acl_localnet:
 ```
 
 ## Custom acl and redefined http_access
-A contrite example but one that does demonstrate how to set acls in addition to the default and with a new http_access ruleset.  Notice also that ``squid_acl_localnet``` is set to an empty list as this acl is not used in http_access
+A contrite example but one that does demonstrate how to set acls in addition to the default and with a new http_access ruleset.  Notice also that ```squid_acl_localnet``` is set to an empty list as this acl is not used in http_access
 ```yaml
 ---
 squid_acl_localnet:
