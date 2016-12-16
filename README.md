@@ -1,6 +1,6 @@
 EADME.md
 # Ansible Role: squid
-A simple yet useful role to configure squid server.  A working proxy can be set up with minimal effort.  This roles tries to balance the sensible [defaults](http://wiki.squid-cache.org/SquidFaq/ConfiguringSquid#Squid-3.5_default_config) distributed with squid but with the option to extended them or disregard them. This role also allows for multiple http and https ports to be configured along with all the usual things like acls and http_access rules.
+A simple yet useful role to configure squid server.  A working proxy can be set up with minimal effort.  This role tries to balance the sensible [defaults](http://wiki.squid-cache.org/SquidFaq/ConfiguringSquid#Squid-3.5_default_config) distributed with squid but with the option to extended them or disregard them. This role also allows for multiple http and https ports to be configured along with all the usual things like acls and http_access rules.
 
 Tested on openSUSE and on CentOS.  Should work on most platforms.  Requires Ansible version >=2.0
 
@@ -23,7 +23,7 @@ The current defaults can be found in [defaults/main.yml](defaults/main.yml) - Th
 
 ``` squid_cache_dir``` - set a value for squid_cache_dir
 
-```squid_coredump_dir``` - Sets the associated value, defaults to /var/cache/squid - likely to be useful different platforms use a different value
+```squid_coredump_dir``` - sets the associated value, defaults to /var/cache/squid - likely to be useful on different platforms that use a different value
 
 ```squid_custom_refresh_patterns``` - a list of additional refresh pattern parameters
 
