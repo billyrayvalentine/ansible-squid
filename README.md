@@ -1,4 +1,4 @@
-EADME.md
+README.md
 # Ansible Role: squid
 A simple yet useful role to configure squid server.  A working proxy can be set up with minimal effort.  This role tries to balance the sensible [defaults](http://wiki.squid-cache.org/SquidFaq/ConfiguringSquid#Squid-3.5_default_config) distributed with squid but with the option to extended them or disregard them. This role also allows for multiple http and https ports to be configured along with all the usual things like acls and http_access rules.
 
