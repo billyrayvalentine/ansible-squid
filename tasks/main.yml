@@ -6,7 +6,6 @@
     state: present
 
 - name: Install squid.conf
-  tags: squid
   template:
     src: squid.conf.j2
     dest: /etc/squid/squid.conf

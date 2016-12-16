@@ -7,15 +7,15 @@ Tested on openSUSE and on CentOS.  Should work on most platforms.  Requires Ansi
 # Role Variables
 The current defaults can be found in [defaults/main.yml](defaults/main.yml) - These should be mostly self explanatory.
 
-```squid_acl_localnet``` - defines the src network value for the default acl "allow localnet" - does not have to be set but the reference to the acl in http_access must be removed.
+```squid_acl_localnet``` - a list defining the src network values for the default acl "allow localnet" - does not have to be set but the reference to the acl in http_access must be removed.
 
-```squid_default_acl``` - populated with the ditributed squid default acl
+```squid_default_acl``` - populated with the distributed squid default acl
 
 ```squid_custom_acl``` - defines an additional acl
 
 ```squid_http_access``` - populated with the default http_access rules.  Any additional rules must refined the entire list
 
-```squid_http_ports``` - a list of http_port parameters to use.  Defaults to 3128.  Redfine as an empty list to not listen with http. Use this to run on multiple ports
+```squid_http_ports``` - a list of http_port parameters to use.  Defaults to 3128.  Redefine as an empty list to not listen with http. Use this to run on multiple ports
 
 ```squid_https_ports``` - a list of https_port parameters to use e.g. "3129 cert=/etc/squid/squid.crt"
 
@@ -35,6 +35,44 @@ The current defaults can be found in [defaults/main.yml](defaults/main.yml) - Th
 Setting just ```squid_acl_localnet``` will provide a working squid proxy
 ```yaml
 ---
-icecast_admin_password: hackme
-icecast_source_password: hackme
+squid_acl_localnet: 
+ - 10.1.2.0/24
+```
+
+## Custom acl and redefined http_access
+A contrite example but one that does demonstrate how to set acls in addition to the default and with a new http_access ruleset.  Notice also that ``squid_acl_localnet``` is set to an empty list as this acl is not used in http_access
+```yaml
+---
+squid_acl_localnet:
+
+squid_custom_acl:
+  - homeworker src 1.2.3.4
+  - homeworker src 7.8.9.10
+  - restricted_sites dstdomain .bbc.co.uk
+
+squid_http_access:
+  - deny !Safe_ports
+  - deny CONNECT !SSL_ports
+  - allow localhost manager
+  - deny manager
+  - deny to_localhost
+  - deny homeworker restricted_sites
+  - allow homeworker
+  - allow localhost
+  - deny all
+```
+
+## https only proxy with no access logging
+```yaml
+---
+squid_acl_localnet:
+  - 10.1.2.0/24
+  - 10.2.3.0/24
+
+squid_http_ports:
+
+squid_https_ports:
+  - 3129 cert=/etc/squid/squid.crt
+
+squid_access_log: none
 ```

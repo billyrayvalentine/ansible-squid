@@ -51,7 +51,7 @@ coredump_dir {{ squid_coredump_dir }}
 {% endif %}
 
 # Custom refresh patterns
-{% if squid_custom_refresh_patterns %}
+{% if squid_custom_refresh_patterns is defined %}
   {% for item in squid_custom_refresh_patterns %}
 refresh_pattern {{ item }}
   {% endfor %}

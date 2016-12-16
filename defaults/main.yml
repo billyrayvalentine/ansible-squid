@@ -16,8 +16,6 @@ squid_default_acl:
   - Safe_ports port 1025-65535  # unregistered ports
   - CONNECT method CONNECT
 
-squid_custom_acl: []
-
 squid_http_access:
   - deny !Safe_ports
   - deny CONNECT !SSL_ports
