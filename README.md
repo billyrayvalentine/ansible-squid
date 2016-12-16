@@ -76,3 +76,7 @@ squid_https_ports:
 
 squid_access_log: none
 ```
+
+# License
+MIT
+
